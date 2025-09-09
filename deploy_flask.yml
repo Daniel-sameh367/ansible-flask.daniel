@@ -1,0 +1,41 @@
+---
+- name: Deploy Flask App on localhost
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    app_dir: /Users/macintosh/python-app
+    venv_dir: "{{ app_dir }}/venv"
+    requirements:
+      - Flask
+      - Flask-Cors
+      - packaging
+    ansible_python_interpreter: /Users/macintosh/python-app/venv/bin/python
+
+  tasks:
+    - name: Create app directory
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+
+    - name: Create virtual environment
+      command: python3 -m venv "{{ venv_dir }}"
+      args:
+        creates: "{{ venv_dir }}"
+
+    - name: Install requirements in virtualenv
+      pip:
+        virtualenv: "{{ venv_dir }}"
+        name: "{{ requirements }}"
+        state: present
+
+    - name: Copy Flask app to app directory
+      copy:
+       src: /Users/macintosh/ansible-flask/app.py
+       dest: /Users/macintosh/python-app/app.py
+
+    - name: Run Flask app
+      shell: "{{ venv_dir }}/bin/python {{ app_dir }}/app.py &"
+      args:
+        chdir: "{{ app_dir }}"
+
