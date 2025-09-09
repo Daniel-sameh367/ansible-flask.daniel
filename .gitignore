@@ -1,0 +1,15 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Node
+node_modules/
+build/
+
+# Docker
+*.pid
+
