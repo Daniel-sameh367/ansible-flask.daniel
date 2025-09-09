@@ -1,0 +1,18 @@
+# نستخدم Node الرسمي
+FROM node:20
+
+WORKDIR /app
+
+# ننسخ ملفات تعريف الـ npm
+COPY package*.json ./
+
+# ننزل المكتبات
+RUN npm install
+
+# ننسخ باقي المشروع
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+

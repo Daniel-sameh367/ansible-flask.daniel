@@ -1,0 +1,19 @@
+# نبدأ من Python خفيف
+FROM python:3.11-slim
+
+# نحدد مجلد الشغل
+WORKDIR /app
+
+# ننسخ requirements وننزل المكتبات
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# ننسخ باقي الملفات
+COPY . .
+
+# نفتح البورت بتاع Flask
+EXPOSE 5003
+
+# نشغل التطبيق
+CMD ["python", "app.py"]
+

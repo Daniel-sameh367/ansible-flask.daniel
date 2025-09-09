@@ -1,0 +1,21 @@
+# نبدأ من Node.js
+FROM node:20
+
+# نحدد مجلد الشغل
+WORKDIR /app
+
+# ننسخ ملفات تعريف الباكدجات
+COPY package*.json ./
+
+# ننزل المكتبات
+RUN npm install
+
+# ننسخ باقي المشروع
+COPY . .
+
+# نفتح بورت React
+EXPOSE 3000
+
+# نشغل التطبيق
+CMD ["npm", "start"]
+
