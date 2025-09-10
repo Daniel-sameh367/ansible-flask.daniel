@@ -1,8 +1,9 @@
 from flask import Flask, render_template_string, request, jsonify
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
 
-# الصفحة HTML كلها هنا
 HTML_PAGE = """
 <!DOCTYPE html>
 <html>
@@ -41,7 +42,6 @@ def home():
 def process():
     data = request.get_json()
     user_text = data.get('text', '')
-    # هنا ممكن تحط أي عملية Backend على النص
     reply = f"You sent: {user_text}"
     return jsonify({'reply': reply})
 
